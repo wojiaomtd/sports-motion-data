@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sports-motion-data.org/schema/assessment-rule.schema.json",
+  "title": "AssessmentRule",
+  "description": "评价规则层 — 动作规范性评分标准与纠偏策略",
+  "type": "object",
+  "required": ["ruleId", "skillUnitId", "fullScoreStandard", "deductionPoints", "correctionStrategy"],
+  "properties": {
+    "ruleId": {
+      "type": "string",
+      "description": "规则唯一标识, 如 '50m-start-posture-score'"
+    },
+    "skillUnitId": {
+      "type": "string",
+      "description": "关联的技能单元 ID"
+    },
+    "fullScoreStandard": {
+      "type": "object",
+      "required": ["description", "quantifiedThresholds"],
+      "properties": {
+        "description": { "type": "string" },
+        "quantifiedThresholds": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["unit", "passRange", "measurementMethod"],
+            "properties": {
+              "unit": { "type": "string" },
+              "passRange": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": { "type": "number" }
+              },
+              "measurementMethod": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "deductionPoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["pointId", "description", "deductionValue", "triggerCondition", "visualIndicator"],
+        "properties": {
+          "pointId": { "type": "string" },
+          "description": { "type": "string" },
+          "deductionValue": { "type": "number", "minimum": 0 },
+          "triggerCondition": { "type": "string" },
+          "visualIndicator": { "type": "string" }
+        }
+      }
+    },
+    "correctionStrategy": {
+      "type": "object",
+      "required": ["description", "drills", "verbalCue", "physicalGuidance"],
+      "properties": {
+        "description": { "type": "string" },
+        "drills": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "verbalCue": { "type": "string" },
+        "physicalGuidance": { "type": "string" }
+      }
+    }
+  }
+}
