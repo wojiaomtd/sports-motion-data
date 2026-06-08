@@ -1,0 +1,393 @@
+{
+  "sportId": "standing-long-jump",
+  "name": "立定跳远",
+  "category": "jump",
+  "movementPattern": "vertical-jump",
+  "applicableGrades": ["grade-7", "grade-8", "grade-9"],
+  "equipment": ["皮尺", "平整沙坑或防滑垫", "起跳线"],
+  "venue": "沙坑或体操垫, 起跳线到落地区 ≥ 3m",
+  "skillUnits": [
+    {
+      "unitId": "slj-preparatory",
+      "name": "预摆",
+      "order": 1,
+      "durationMs": 1000,
+      "description": "双脚开立与肩同宽, 双臂自然后摆, 同时屈膝半蹲, 重心下降并前移, 然后双臂快速前上摆, 膝踝蹬伸",
+      "keyJoints": {
+        "膝角(预蹲最低点)": {
+          "angleRange": [100, 130],
+          "angleDescription": "预蹲时膝关节角度, 太深(蹲到底)反而无法快速蹬伸",
+          "measurementMethod": "pose-estimation"
+        },
+        "踝角(预蹲最低点)": {
+          "angleRange": [70, 85],
+          "angleDescription": "踝关节背屈角度, 储存弹性势能",
+          "measurementMethod": "pose-estimation"
+        },
+        "肩角(后摆)": {
+          "angleRange": [30, 50],
+          "angleDescription": "后摆时肩关节伸展角度(相对躯干), 摆幅越大蓄力越足",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "下肢(髋-膝-踝)",
+          "direction": "向下",
+          "timing": "early",
+          "description": "屈膝半蹲, 离心收缩蓄力"
+        },
+        {
+          "bodyPart": "双臂",
+          "direction": "向后",
+          "timing": "early",
+          "description": "双臂自然后摆至最大幅度"
+        },
+        {
+          "bodyPart": "双臂→躯干→下肢",
+          "direction": "向前上方",
+          "timing": "late",
+          "description": "双臂快速前上摆, 驱动身体向前上方"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "先下降后上升, 伴随前移",
+        "heightChange": "下降约15-25cm后开始上升",
+        "horizontalShift": "重心前移至前脚掌上方, 为蹬伸做准备"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "预蹲最低点",
+          "description": "膝关节弯曲最大, 身体重心最低, 双臂后摆至极限",
+          "timing": "mid"
+        },
+        {
+          "frameName": "臂摆前上方",
+          "description": "双臂由后向前上方加速摆动, 身体开始伸展",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "slj-squat-too-deep",
+          "name": "预蹲过深",
+          "visualCue": "膝角 < 90°, 臀部接近脚踝",
+          "rootCause": "误以为蹲得越深跳得越远",
+          "severity": "critical"
+        },
+        {
+          "errorId": "slj-no-arm-swing",
+          "name": "摆臂无力或不摆",
+          "visualCue": "手臂摆动幅度极小, 或起跳时手臂停住不动",
+          "rootCause": "上肢协调性不足/未理解摆臂的作用",
+          "severity": "major"
+        }
+      ]
+    },
+    {
+      "unitId": "slj-takeoff",
+      "name": "起跳蹬伸",
+      "order": 2,
+      "durationMs": 200,
+      "description": "双臂加速上摆至头顶上方, 同时下肢三关节(髋-膝-踝)爆发性伸展, 脚尖最后离地, 起跳角度约30-45°",
+      "keyJoints": {
+        "起跳角(重心-脚尖连线与地面)": {
+          "angleRange": [30, 45],
+          "angleDescription": "起跳角度, 太小则高度不足, 太大则距离不足",
+          "measurementMethod": "pose-estimation"
+        },
+        "髋角(离地瞬间)": {
+          "angleRange": [170, 190],
+          "angleDescription": "离地瞬间髋关节应充分伸展",
+          "measurementMethod": "pose-estimation"
+        },
+        "膝角(离地瞬间)": {
+          "angleRange": [170, 185],
+          "angleDescription": "离地瞬间膝关节接近完全伸直",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "臀大肌+股四头肌+小腿三头肌",
+          "direction": "向前上方",
+          "timing": "early",
+          "description": "三关节同步爆发蹬伸, 力量从髋→膝→踝依次传递"
+        },
+        {
+          "bodyPart": "跖屈肌群",
+          "direction": "向下后方",
+          "timing": "late",
+          "description": "脚尖最后离地, 充分跖屈"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "抛物线轨迹, 向前上方加速",
+        "heightChange": "快速上升",
+        "horizontalShift": "最大水平速度输出阶段"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "蹬伸开始",
+          "description": "三关节开始伸展, 双臂过肩",
+          "timing": "start"
+        },
+        {
+          "frameName": "脚尖离地",
+          "description": "脚尖最后离地, 身体成反弓形",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "slj-takeoff-angle-low",
+          "name": "起跳角过小",
+          "visualCue": "身体几乎横向飞出, 腾空高度 < 15cm",
+          "rootCause": "过于追求向前的力量, 忽略向上的摆臂",
+          "severity": "critical"
+        },
+        {
+          "errorId": "slj-double-foot-uneven",
+          "name": "双脚发力不均",
+          "visualCue": "腾空时身体左右倾斜, 落地时一脚明显在前",
+          "rootCause": "左右力量不平衡",
+          "severity": "major"
+        }
+      ]
+    },
+    {
+      "unitId": "slj-flight",
+      "name": "腾空收腿",
+      "order": 3,
+      "durationMs": 400,
+      "description": "腾空后双膝向胸前收拢, 上体适当前倾, 双臂由头上方向前下方摆动, 小腿前伸准备落地",
+      "keyJoints": {
+        "膝角(收腿)": {
+          "angleRange": [40, 70],
+          "angleDescription": "收腿时膝关节最大折叠角度",
+          "measurementMethod": "pose-estimation"
+        },
+        "髋角(收腿)": {
+          "angleRange": [30, 60],
+          "angleDescription": "髋关节折叠角度, 反映收腿程度",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "腹肌+髋屈肌",
+          "direction": "向前上方",
+          "timing": "early",
+          "description": "主动收腹提膝, 将双腿向胸前拉近"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "抛物线(不可改变, 由起跳决定)",
+        "heightChange": "先上升后下降",
+        "horizontalShift": "匀速前进"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "腾空最高点",
+          "description": "身体重心达到最高点, 开始收腿动作",
+          "timing": "start"
+        },
+        {
+          "frameName": "收腿完成",
+          "description": "双膝最接近胸前, 小腿即将前伸",
+          "timing": "mid"
+        },
+        {
+          "frameName": "小腿前伸",
+          "description": "双脚前伸, 脚后跟即将触地",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "slj-no-tuck",
+          "name": "不收腿",
+          "visualCue": "腾空后双腿保持伸直或微屈, 没有收膝动作",
+          "rootCause": "核心力量不足/不知道要收腿",
+          "severity": "critical"
+        },
+        {
+          "errorId": "slj-legs-drop-early",
+          "name": "收腿过早放开",
+          "visualCue": "腾空后半段腿已伸展, 重心下降过快",
+          "rootCause": "腹肌耐力不足/未掌握时机",
+          "severity": "major"
+        }
+      ]
+    },
+    {
+      "unitId": "slj-landing",
+      "name": "落地缓冲",
+      "order": 4,
+      "durationMs": 300,
+      "description": "脚后跟先触地, 随之屈膝缓冲, 上体前倾, 重心前移, 双臂前伸帮助平衡, 避免后坐或后退",
+      "keyJoints": {
+        "膝角(落地缓冲最深)": {
+          "angleRange": [90, 130],
+          "angleDescription": "落地缓冲时膝关节最大屈曲角度, 太深说明冲击吸收不足",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "膝-踝",
+          "direction": "向下",
+          "timing": "early",
+          "description": "屈膝缓冲, 吸收落地冲击"
+        },
+        {
+          "bodyPart": "躯干+手臂",
+          "direction": "向前",
+          "timing": "late",
+          "description": "重心前移, 双臂前伸, 防止后坐"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "下降至最低点后稳定",
+        "heightChange": "下降至缓冲最深点",
+        "horizontalShift": "重心应落在脚前掌而非脚跟后方"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "脚跟着地",
+          "description": "双脚脚跟同时触地, 脚尖朝上",
+          "timing": "start"
+        },
+        {
+          "frameName": "缓冲最深",
+          "description": "膝关节弯曲至最大, 重心降至最低",
+          "timing": "mid"
+        },
+        {
+          "frameName": "稳定站立",
+          "description": "身体前移站稳, 无后坐或后退",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "slj-fall-back",
+          "name": "落地后坐",
+          "visualCue": "落地后屁股后坐, 手撑地或后退一步",
+          "rootCause": "落地时重心偏后/未主动前移重心",
+          "severity": "critical"
+        },
+        {
+          "errorId": "slj-stiff-landing",
+          "name": "落地僵直",
+          "visualCue": "落地时膝关节不屈, 直腿落地",
+          "rootCause": "缓冲意识不足",
+          "severity": "major"
+        }
+      ]
+    }
+  ],
+  "teachingProgression": [
+    {
+      "order": 1,
+      "name": "分解模仿",
+      "goal": "分部位练习: 摆臂→蹬伸→收腿",
+      "drills": [
+        "原地摆臂练习: 无跳跃, 仅练习摆臂爆发节奏, 10次/组",
+        "无摆臂跳: 手叉腰, 仅做蹬伸跳跃, 体会下肢发力"
+      ],
+      "focusUnits": ["slj-preparatory", "slj-takeoff"]
+    },
+    {
+      "order": 2,
+      "name": "完整动作",
+      "goal": "慢速完整跳(不追求距离), 关注发力顺序",
+      "drills": [
+        "50%力量完整跳远, 关注摆臂→蹬伸→收腿→落地的完整链",
+        "录像回放: 重点检查起跳角(侧面)和收腿(正面)"
+      ],
+      "focusUnits": ["slj-preparatory", "slj-takeoff", "slj-flight", "slj-landing"]
+    },
+    {
+      "order": 3,
+      "name": "纠偏优化",
+      "goal": "针对起跳角/收腿/落地后坐进行纠偏",
+      "drills": [
+        "低障碍跳: 起跳线后1.5m处拉30cm橡皮筋, 必须越过",
+        "收腹跳: 原地双脚跳, 腾空时双膝主动触胸",
+        "台阶跳: 从20cm台阶向下跳, 利用落差练习收腿"
+      ],
+      "focusUnits": ["slj-takeoff", "slj-flight", "slj-landing"]
+    },
+    {
+      "order": 4,
+      "name": "强化自动化",
+      "goal": "连续蛙跳+阻力跳, 强化爆发力与动作自动化",
+      "drills": [
+        "连续蛙跳: 3-5次连续立定跳远, 保持动作一致性",
+        "弹力带阻力跳: 腰部系弹力带, 克服阻力起跳"
+      ],
+      "focusUnits": ["slj-takeoff", "slj-flight", "slj-landing"]
+    }
+  ],
+  "assessmentRules": [
+    {
+      "ruleId": "slj-overall-score",
+      "skillUnitId": "slj-takeoff",
+      "fullScoreStandard": {
+        "description": "预摆充分, 起跳角度适宜(30-45°), 腾空有明显收腿前伸动作, 落地脚跟着地后屈膝缓冲, 重心前移站稳不后退",
+        "quantifiedThresholds": {
+          "起跳角": {
+            "unit": "度",
+            "passRange": [30, 45],
+            "measurementMethod": "pose-estimation: 离地瞬间重心-脚尖连线与地面夹角"
+          },
+          "收腿髋角": {
+            "unit": "度",
+            "passRange": [30, 60],
+            "measurementMethod": "pose-estimation: 腾空最高点时髋关节角度"
+          },
+          "落地稳定性": {
+            "unit": "cm",
+            "passRange": [0, 5],
+            "measurementMethod": "落地后臀部后移距离(0=无后坐)"
+          }
+        }
+      },
+      "deductionPoints": [
+        {
+          "pointId": "slj-arm-not-used",
+          "description": "摆臂幅度不足/不摆臂",
+          "deductionValue": 2,
+          "triggerCondition": "肩关节摆动幅度 < 60°",
+          "visualIndicator": "侧面摄像头: 肩角变化范围"
+        },
+        {
+          "pointId": "slj-no-tuck-deduct",
+          "description": "腾空无收腿动作",
+          "deductionValue": 3,
+          "triggerCondition": "腾空阶段髋角始终保持 > 100°",
+          "visualIndicator": "侧面摄像头: 髋关节角度变化"
+        },
+        {
+          "pointId": "slj-fall-back-deduct",
+          "description": "落地后坐/手撑地/后退",
+          "deductionValue": 3,
+          "triggerCondition": "落地后臀部后移 > 5cm 或手触地",
+          "visualIndicator": "侧面/正面摄像头: 臀部轨迹 + 手部检测"
+        }
+      ],
+      "correctionStrategy": {
+        "description": "立定跳远最核心的纠偏逻辑: 学生跳不远通常不是力量问题, 是发力顺序和时机问题。先检查摆臂(上肢驱动), 再检查起跳角(方向), 最后检查收腿(距离最大化)。",
+        "drills": [
+          "摆臂强化: 原地不动, 仅练习双臂后摆→前上摆的爆发节奏, 10次/组",
+          "低障碍跳: 在起跳线后1.5m处拉一根30cm高的橡皮筋, 学生必须从上方越过",
+          "收腹跳: 原地双脚跳, 腾空时双膝主动触胸, 强化收腿意识",
+          "台阶跳: 站在20cm台阶上向下跳, 利用落差增加腾空时间练习收腿"
+        ],
+        "verbalCue": "先摆后蹬——手臂比腿先动, 胸口带着身体走",
+        "physicalGuidance": "教师站在学生侧前方, 在学生预摆最低点时用手轻拍其后背, 提示'该蹬了', 帮助学生掌握摆→蹬的时机切换"
+      }
+    }
+  ]
+}
