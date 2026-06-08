@@ -133,7 +133,7 @@ Contributions welcome! Areas we need help with:
 
 ## Commercial Use
 
-For commercial licensing, custom datasets, or consulting services, please contact the author.
+For commercial licensing, custom datasets, or consulting services, please contact the author at lixu.198808@163.com.
 
 ## License
 
