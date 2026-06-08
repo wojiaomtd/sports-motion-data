@@ -112,7 +112,7 @@ This dataset unlocks that knowledge.
 ```python
 from datasets import load_dataset
 
-dataset = load_dataset("YOUR_USERNAME/sports-motion-data")
+dataset = load_dataset("wojiaomtd/sports-motion-data")
 sprint = dataset["train"][0]  # First row: 50m sprint
 print(sprint["name"])         # "50米跑"
 print(len(sprint["skillUnits"]))  # 4
@@ -126,14 +126,14 @@ for unit in sprint["skillUnits"]:
 
 ```ts
 const sprint = await fetch(
-  'https://huggingface.co/datasets/YOUR_USERNAME/sports-motion-data/resolve/main/data/50m-sprint.json'
+  'https://huggingface.co/datasets/wojiaomtd/sports-motion-data/resolve/main/data/50m-sprint.json'
 ).then(r => r.json());
 console.log(sprint.skillUnits[0].name); // "起跑"
 ```
 
 ## Data Validation
 
-This dataset is validated against JSON Schema Draft 2020-12. See the [GitHub repo](https://github.com/YOUR_USERNAME/sports-motion-data) for validation tools.
+This dataset is validated against JSON Schema Draft 2020-12. See the [GitHub repo](https://github.com/wojiaomtd/sports-motion-data) for validation tools.
 
 ## Limitations & Future Work
 
@@ -158,10 +158,10 @@ We welcome contributions in these areas:
   title = {Sports Motion Teaching Data Structure},
   year = {2026},
   publisher = {Hugging Face},
-  howpublished = {\url{https://huggingface.co/datasets/YOUR_USERNAME/sports-motion-data}},
+  howpublished = {\url{https://huggingface.co/datasets/wojiaomtd/sports-motion-data}},
 }
 ```
 
 ## License
 
-MIT — see [LICENSE](https://github.com/YOUR_USERNAME/sports-motion-data/blob/main/LICENSE) for details.
+MIT — see [LICENSE](https://github.com/wojiaomtd/sports-motion-data/blob/main/LICENSE) for details.
