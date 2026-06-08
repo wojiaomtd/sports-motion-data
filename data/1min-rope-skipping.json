@@ -1,0 +1,283 @@
+{
+  "sportId": "1min-rope-skipping",
+  "name": "1分钟跳绳",
+  "category": "coordination",
+  "movementPattern": "cyclic-coordination",
+  "applicableGrades": ["grade-7", "grade-8", "grade-9"],
+  "equipment": ["跳绳(塑料/钢丝绳)", "秒表"],
+  "venue": "平整地面, 约2m×2m空间",
+  "skillUnits": [
+    {
+      "unitId": "rope-ready",
+      "name": "准备姿势",
+      "order": 1,
+      "durationMs": 500,
+      "description": "绳放身后, 双手握绳柄, 肘关节靠近身体两侧, 手腕放松, 身体直立, 核心微收紧, 目视前方",
+      "keyJoints": {
+        "肘角": {
+          "angleRange": [80, 100],
+          "angleDescription": "肘关节弯曲近90°, 上臂贴近身体",
+          "measurementMethod": "pose-estimation"
+        },
+        "腕关节位置": {
+          "angleRange": [0, 15],
+          "angleDescription": "手腕在中立位, 过高或过低都会影响摇绳效率",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [],
+      "centerOfGravity": {
+        "trajectory": "稳定",
+        "heightChange": "stable",
+        "horizontalShift": "无明显位移"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "准备完成",
+          "description": "绳在身后地面, 手腕在腰侧, 身体直立",
+          "timing": "start"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "rope-arm-out",
+          "name": "手臂外展过大",
+          "visualCue": "上臂远离身体 > 15cm, 像鸟翅膀",
+          "rootCause": "习惯用肩摇绳而非手腕",
+          "severity": "critical"
+        },
+        {
+          "errorId": "rope-wrist-high",
+          "name": "手腕过高",
+          "visualCue": "双手在腰以上位置",
+          "rootCause": "摇绳动作错误",
+          "severity": "major"
+        }
+      ]
+    },
+    {
+      "unitId": "rope-skipping",
+      "name": "稳定跳跃阶段",
+      "order": 2,
+      "durationMs": 55000,
+      "description": "手腕快速画圈摇绳, 前脚掌着地, 跳跃高度约2-3cm, 膝关节微屈缓冲, 核心收紧保持身体稳定, 呼吸均匀, 保持节律",
+      "keyJoints": {
+        "跳跃高度": {
+          "angleRange": [2, 5],
+          "angleDescription": "脚底离地高度(cm), 越低越省力",
+          "measurementMethod": "pose-estimation(脚底高度追踪)"
+        },
+        "膝角(着地)": {
+          "angleRange": [150, 170],
+          "angleDescription": "着地瞬间膝关节角度, 接近伸直但保持弹性",
+          "measurementMethod": "pose-estimation"
+        },
+        "腕关节活动范围": {
+          "angleRange": [20, 50],
+          "angleDescription": "摇绳时腕关节的活动范围(度)",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "前臂旋前/旋后肌群",
+          "direction": "旋转",
+          "timing": "early",
+          "description": "手腕旋转驱动绳子, 不是手臂"
+        },
+        {
+          "bodyPart": "小腿三头肌",
+          "direction": "向下",
+          "timing": "mid",
+          "description": "前脚掌弹性跳跃, 触地即弹"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "极小幅度上下振动, 水平方向稳定",
+        "heightChange": "波动 < 5cm",
+        "horizontalShift": "稳定, 无明显漂移"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "绳过脚底",
+          "description": "绳从脚底经过的瞬间, 前脚掌着地",
+          "timing": "mid"
+        },
+        {
+          "frameName": "腾空最高点",
+          "description": "脚底离地最高点(<5cm)",
+          "timing": "mid"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "rope-jump-too-high",
+          "name": "跳跃过高",
+          "visualCue": "腾空高度 > 8cm, 像做弹跳练习",
+          "rootCause": "对跳绳的动作本质理解错误",
+          "severity": "critical"
+        },
+        {
+          "errorId": "rope-arm-drive",
+          "name": "手臂摇绳而非手腕",
+          "visualCue": "前臂大幅度画圈, 上臂远离身体",
+          "rootCause": "腕关节灵活性不足/技术错误",
+          "severity": "critical"
+        },
+        {
+          "errorId": "rope-body-twist",
+          "name": "身体扭动",
+          "visualCue": "躯干左右旋转辅助摇绳",
+          "rootCause": "手腕力量不足, 代偿为身体扭转",
+          "severity": "major"
+        },
+        {
+          "errorId": "rope-break",
+          "name": "频繁断绳",
+          "visualCue": "绳子绊脚, 中断跳跃",
+          "rootCause": "节奏不稳/注意力不集中/疲劳",
+          "severity": "major"
+        }
+      ]
+    },
+    {
+      "unitId": "rope-fatigue",
+      "name": "疲劳应对阶段",
+      "order": 3,
+      "durationMs": 5000,
+      "description": "最后10-15秒, 体力下降, 需维持技术动作不变形, 可适当提高跳跃高度(3-5cm)换取稳定性, 保持呼吸节奏",
+      "keyJoints": {
+        "跳跃高度(疲劳)": {
+          "angleRange": [3, 8],
+          "angleDescription": "疲劳时跳跃高度有所增加是正常代偿, 但不应超过8cm",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [],
+      "centerOfGravity": {
+        "trajectory": "波动略增大",
+        "heightChange": "波动可能增至5-8cm",
+        "horizontalShift": "可能出现轻微漂移"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "疲劳起点",
+          "description": "技术动作开始出现微小变形(手臂外展增大, 跳跃增高)",
+          "timing": "start"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "rope-fatigue-collapse",
+          "name": "疲劳后技术崩溃",
+          "visualCue": "手臂完全外展, 跳跃高度 > 10cm, 连续断绳",
+          "rootCause": "专项耐力不足",
+          "severity": "critical"
+        }
+      ]
+    }
+  ],
+  "teachingProgression": [
+    {
+      "order": 1,
+      "name": "分解模仿",
+      "goal": "分部位练习: 手腕摇绳→无绳跳跃→组合",
+      "drills": [
+        "空手手腕摇绳: 不拿绳, 仅练习手腕画圈, 100次/组",
+        "单手持绳摇: 单手拿绳摇圈, 体会手腕发力的感觉",
+        "无绳跳: 不拿绳做跳跃练习, 强调低跳(2-3cm)"
+      ],
+      "focusUnits": ["rope-ready", "rope-skipping"]
+    },
+    {
+      "order": 2,
+      "name": "完整动作",
+      "goal": "慢速完整跳绳(不计时), 关注手腕驱动",
+      "drills": [
+        "慢速跳绳: 不计时, 每分钟约80-100次, 专注手腕动作",
+        "录像回放: 侧面检查跳跃高度, 正面检查手臂位置"
+      ],
+      "focusUnits": ["rope-ready", "rope-skipping"]
+    },
+    {
+      "order": 3,
+      "name": "纠偏优化",
+      "goal": "针对手臂外展/跳跃过高进行纠偏",
+      "drills": [
+        "固定肘部跳: 腋下夹纸片跳绳, 纸片不掉说明上臂未外展",
+        "节拍器跳: 用节拍器(120-140bpm)配合跳跃, 建立节奏感"
+      ],
+      "focusUnits": ["rope-skipping"]
+    },
+    {
+      "order": 4,
+      "name": "强化自动化",
+      "goal": "间歇训练提升专项耐力, 形成动作自动化",
+      "drills": [
+        "30秒快跳×6组(组间休息10秒)",
+        "完整1分钟测试: 每周2次, 记录数量和断绳次数"
+      ],
+      "focusUnits": ["rope-skipping", "rope-fatigue"]
+    }
+  ],
+  "assessmentRules": [
+    {
+      "ruleId": "rope-skipping-score",
+      "skillUnitId": "rope-skipping",
+      "fullScoreStandard": {
+        "description": "手腕摇绳, 上臂贴近身体, 跳跃高度不超过5cm, 节奏稳定, 1分钟内无断绳或仅有1-2次轻微中断, 数量达到年级满分线",
+        "quantifiedThresholds": {
+          "跳跃高度均值": {
+            "unit": "cm",
+            "passRange": [2, 5],
+            "measurementMethod": "pose-estimation: 脚底离地高度时序数据的均值"
+          },
+          "上臂外展距离": {
+            "unit": "cm",
+            "passRange": [0, 10],
+            "measurementMethod": "pose-estimation: 上臂与躯干的横向距离"
+          },
+          "中断次数": {
+            "unit": "次",
+            "passRange": [0, 2],
+            "measurementMethod": "视频分析: 停顿检测"
+          }
+        }
+      },
+      "deductionPoints": [
+        {
+          "pointId": "rope-arm-penalty",
+          "description": "上臂外展(大臂远离身体 > 15cm)",
+          "deductionValue": 3,
+          "triggerCondition": "上臂-躯干横向距离 > 15cm 持续 > 10秒",
+          "visualIndicator": "正面/背面摄像头: 肘-躯干横向距离"
+        },
+        {
+          "pointId": "rope-jump-high-penalty",
+          "description": "跳跃过高(> 8cm)",
+          "deductionValue": 2,
+          "triggerCondition": "平均腾空高度 > 8cm",
+          "visualIndicator": "侧面摄像头: 脚底高度追踪"
+        },
+        {
+          "pointId": "rope-break-penalty",
+          "description": "中断次数过多",
+          "deductionValue": 2,
+          "triggerCondition": "1分钟内中断 > 3次",
+          "visualIndicator": "视频分析: 跳绳停止/重新开始的帧"
+        }
+      ],
+      "correctionStrategy": {
+        "description": "跳绳问题的诊断优先级: 先看手腕(动力源是否正确) → 再看跳跃高度(是否浪费能量) → 再看节律(是否稳定) → 最后看数量(综合结果)。多数学生不是体力不行, 是技术不对导致效率低。",
+        "drills": [
+          "空手手腕摇绳: 不拿绳, 仅练习手腕画圈(各方向), 100次/组",
+          "单手持绳摇: 单手拿绳摇圈, 体会手腕发力的感觉",
+          "有声跳: 用节拍器(120-140bpm)配合跳跃, 建立节奏感",
+          "间歇训练: 30秒跳+10秒休息×6组, 提升专项耐力"
+        ],
+        "verbalCue": "手在腰, 腕画圈, 脚像弹簧一样弹",
+        "physicalGuidance": "教师站在学生身后, 用手轻轻固定其双肘在腰部位置, 让其体会'手臂不动, 只动手腕'的感觉"
+      }
+    }
+  ]
+}
