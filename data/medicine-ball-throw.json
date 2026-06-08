@@ -1,0 +1,374 @@
+{
+  "sportId": "medicine-ball-throw",
+  "name": "掷实心球",
+  "category": "throw",
+  "movementPattern": "overhead-throw",
+  "applicableGrades": ["grade-7", "grade-8", "grade-9"],
+  "equipment": ["实心球(2kg)", "皮尺"],
+  "venue": "投掷区, 前方开阔无遮挡",
+  "skillUnits": [
+    {
+      "unitId": "mb-ready",
+      "name": "准备姿势",
+      "order": 1,
+      "durationMs": 1000,
+      "description": "双脚前后/左右开立, 面对投掷方向, 双手持球于胸前, 手指自然张开托住球后下方, 拇指相对, 身体放松",
+      "keyJoints": {
+        "双脚间距": {
+          "angleRange": [30, 50],
+          "angleDescription": "双脚间距(cm), 与肩同宽为佳",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [],
+      "centerOfGravity": {
+        "trajectory": "稳定",
+        "heightChange": "stable",
+        "horizontalShift": "居于两脚之间"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "持球姿势",
+          "description": "双手托球于胸前, 手指张开, 肘自然下垂",
+          "timing": "start"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "mb-grip-wrong",
+          "name": "持球方式错误",
+          "visualCue": "手掌夹球两侧(像拿篮球)而非托球下方",
+          "rootCause": "未学过正确持球方法",
+          "severity": "major"
+        }
+      ]
+    },
+    {
+      "unitId": "mb-backswing",
+      "name": "后引反弓",
+      "order": 2,
+      "durationMs": 500,
+      "description": "持球上举至头顶上方, 双臂向头后伸展, 同时身体后仰呈反弓形, 髋关节前顶, 膝关节微屈, 积蓄弹性势能",
+      "keyJoints": {
+        "肩角(后引最大)": {
+          "angleRange": [160, 190],
+          "angleDescription": "手臂与躯干的夹角, 后引越充分蓄力越长",
+          "measurementMethod": "pose-estimation"
+        },
+        "躯干后仰角": {
+          "angleRange": [15, 30],
+          "angleDescription": "躯干后仰与垂直线的夹角, 太大则无法发力",
+          "measurementMethod": "pose-estimation"
+        },
+        "膝角": {
+          "angleRange": [130, 150],
+          "angleDescription": "蓄力时膝关节微屈, 不完全伸直",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "胸部+肩部",
+          "direction": "向后拉伸",
+          "timing": "early",
+          "description": "胸大肌和肩关节前部被拉长, 储存弹性势能"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "略后移至脚跟方向",
+        "heightChange": "稳定",
+        "horizontalShift": "略后移"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "后引最大点",
+          "description": "球在头部后上方最远处, 身体反弓最大, 即将发力",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "mb-backswing-shallow",
+          "name": "后引不充分",
+          "visualCue": "球仅在头顶正上方, 未向头后伸展",
+          "rootCause": "肩关节灵活性不足/不敢后仰",
+          "severity": "critical"
+        },
+        {
+          "errorId": "mb-overarch",
+          "name": "过度后仰",
+          "visualCue": "躯干后仰 > 40°, 腰过度反弓",
+          "rootCause": "误以为越后仰越好",
+          "severity": "major"
+        }
+      ]
+    },
+    {
+      "unitId": "mb-power",
+      "name": "发力鞭打",
+      "order": 3,
+      "durationMs": 300,
+      "description": "由下至上依次发力: 双腿蹬伸 → 髋关节前送 → 躯干由后仰转前屈 → 肩关节内收 → 肘关节伸展 → 手腕手指拨球, 形成鞭打动作, 球在头部前上方出手",
+      "keyJoints": {
+        "出手角": {
+          "angleRange": [35, 45],
+          "angleDescription": "球出手时速度方向与地面的夹角",
+          "measurementMethod": "pose-estimation(球轨迹前5帧)"
+        },
+        "出手时肩角": {
+          "angleRange": [100, 130],
+          "angleDescription": "球出手瞬间手臂与躯干的夹角",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "股四头肌+臀大肌",
+          "direction": "向前上方",
+          "timing": "early",
+          "description": "下肢蹬伸, 将力量从地面传递到髋"
+        },
+        {
+          "bodyPart": "腹直肌+腹斜肌",
+          "direction": "向前",
+          "timing": "mid",
+          "description": "躯干由后仰转前屈, 核心爆发力"
+        },
+        {
+          "bodyPart": "胸大肌+三角肌前束",
+          "direction": "向前方",
+          "timing": "mid",
+          "description": "肩关节内收, 将球向投掷方向加速"
+        },
+        {
+          "bodyPart": "肱三头肌+腕屈肌",
+          "direction": "向前",
+          "timing": "late",
+          "description": "手臂伸展+手腕拨球, 最后的鞭打加速"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "由后向前快速转移",
+        "heightChange": "先下降(蹬伸前)后上升(蹬伸后)",
+        "horizontalShift": "大幅前移"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "蹬伸开始",
+          "description": "膝关节开始伸展, 力量从地面启动",
+          "timing": "start"
+        },
+        {
+          "frameName": "髋前送",
+          "description": "髋关节前顶, 躯干开始由后仰转前屈",
+          "timing": "mid"
+        },
+        {
+          "frameName": "球出手",
+          "description": "球离开手指尖的瞬间, 身体前倾",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "mb-arm-only",
+          "name": "只用手臂不蹬腿",
+          "visualCue": "下肢不动, 仅靠肩臂力量投掷",
+          "rootCause": "未理解动力链概念",
+          "severity": "critical"
+        },
+        {
+          "errorId": "mb-release-angle-wrong",
+          "name": "出手角不对",
+          "visualCue": "球太高(> 50°)或太平(< 25°)飞出",
+          "rootCause": "出手时机不对/控制不好",
+          "severity": "critical"
+        },
+        {
+          "errorId": "mb-power-order-wrong",
+          "name": "发力顺序颠倒",
+          "visualCue": "手臂先动, 身体后跟上",
+          "rootCause": "协调性不足",
+          "severity": "major"
+        }
+      ]
+    },
+    {
+      "unitId": "mb-release",
+      "name": "出手与跟随",
+      "order": 4,
+      "durationMs": 100,
+      "description": "球从指尖离手, 手指最后拨球使球产生后旋(增加飞行稳定性), 手腕自然下垂, 目送球飞行",
+      "keyJoints": {
+        "腕关节(出手后)": {
+          "angleRange": [130, 160],
+          "angleDescription": "出手后手腕自然屈曲",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "指屈肌",
+          "direction": "向前下方(拨球)",
+          "timing": "late",
+          "description": "手指最后拨球, 产生后旋"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "继续前移",
+        "heightChange": "稳定或微升",
+        "horizontalShift": "重心已完全转移到前脚"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "球离手",
+          "description": "球离开指尖, 手指指向投掷方向",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "mb-no-spin",
+          "name": "无拨球动作",
+          "visualCue": "球出手后随机旋转或无旋转",
+          "rootCause": "手指末节发力不足/未教授拨球",
+          "severity": "minor"
+        }
+      ]
+    },
+    {
+      "unitId": "mb-follow-through",
+      "name": "跟随与平衡",
+      "order": 5,
+      "durationMs": 200,
+      "description": "球离手后身体顺势前倾, 可迈一步前脚维持平衡, 不踩线, 不做多余的侧倒或后仰",
+      "keyJoints": {},
+      "forceSequence": [],
+      "centerOfGravity": {
+        "trajectory": "前移至前脚上方",
+        "heightChange": "稳定",
+        "horizontalShift": "重心落于前脚"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "跟随完成",
+          "description": "身体稳定, 不踩线",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "mb-step-over",
+          "name": "踩线犯规",
+          "visualCue": "投掷后脚踩到或越过投掷线",
+          "rootCause": "发力过猛失去平衡/未留安全距离",
+          "severity": "critical"
+        }
+      ]
+    }
+  ],
+  "teachingProgression": [
+    {
+      "order": 1,
+      "name": "分解模仿",
+      "goal": "分部位练习: 蹬伸送髋→跪姿投掷→站姿轻球",
+      "drills": [
+        "无球蹬伸送髋: 面对墙站立, 双手推墙, 仅练习双腿蹬伸+髋前送",
+        "跪姿投掷: 双腿跪在垫上, 仅用上肢+躯干投掷轻球(1kg), 体会鞭打"
+      ],
+      "focusUnits": ["mb-ready", "mb-backswing", "mb-power"]
+    },
+    {
+      "order": 2,
+      "name": "完整动作",
+      "goal": "慢速完整投掷(1kg球), 关注动力链",
+      "drills": [
+        "轻球(1kg)完整投掷: 降低负荷, 专注下肢→髋→躯干→手臂的传递",
+        "慢动作分解: 教师口令'蹬→送→转→伸→拨', 学生按节奏分步完成"
+      ],
+      "focusUnits": ["mb-backswing", "mb-power", "mb-release", "mb-follow-through"]
+    },
+    {
+      "order": 3,
+      "name": "纠偏优化",
+      "goal": "针对只用上肢/出手角进行纠偏",
+      "drills": [
+        "弹力带辅助: 弹力带固定在前方高处, 练习拉弹力带模拟投掷动作",
+        "出手角练习: 对墙投掷(距墙2m), 球触墙高度应在2-2.5m(对应35-45°出手角)"
+      ],
+      "focusUnits": ["mb-power"]
+    },
+    {
+      "order": 4,
+      "name": "强化自动化",
+      "goal": "2kg完整投掷+力量训练, 形成动力链自动化",
+      "drills": [
+        "2kg实心球: 完整投掷×10次, 记录最远距离",
+        "辅助力量: 药球砸地(强化核心爆发力), 俯卧撑(强化上肢推力)"
+      ],
+      "focusUnits": ["mb-power", "mb-release", "mb-follow-through"]
+    }
+  ],
+  "assessmentRules": [
+    {
+      "ruleId": "mb-throw-score",
+      "skillUnitId": "mb-power",
+      "fullScoreStandard": {
+        "description": "下肢蹬伸→髋前送→躯干前屈→肩内收→肘伸→腕拨球, 动力链依次传递, 出手角35-45°, 投掷距离达标",
+        "quantifiedThresholds": {
+          "出手角": {
+            "unit": "度",
+            "passRange": [35, 45],
+            "measurementMethod": "pose-estimation: 球离手后5帧轨迹方向与地面夹角"
+          },
+          "发力顺序": {
+            "unit": "帧",
+            "passRange": [4, 8],
+            "measurementMethod": "视频逐帧分析: 膝伸展→髋前送→肩内收→肘伸展的时间间隔, 正确顺序下各环节间隔2-3帧(60fps)"
+          }
+        }
+      },
+      "deductionPoints": [
+        {
+          "pointId": "mb-arm-only-deduct",
+          "description": "只用手臂发力, 下肢不参与",
+          "deductionValue": 4,
+          "triggerCondition": "蹬伸阶段膝角变化 < 10°",
+          "visualIndicator": "侧面摄像头: 膝关节角度追踪"
+        },
+        {
+          "pointId": "mb-angle-bad-deduct",
+          "description": "出手角度偏离理想区间",
+          "deductionValue": 3,
+          "triggerCondition": "出手角 < 25° 或 > 50°",
+          "visualIndicator": "侧面摄像头: 球轨迹分析"
+        },
+        {
+          "pointId": "mb-sequence-wrong-deduct",
+          "description": "发力顺序错误(手臂先于身体)",
+          "deductionValue": 3,
+          "triggerCondition": "肘伸展帧 - 髋前送帧 < 0(手臂先动)",
+          "visualIndicator": "侧面摄像头逐帧分析"
+        },
+        {
+          "pointId": "mb-foul-deduct",
+          "description": "踩线犯规",
+          "deductionValue": 5,
+          "triggerCondition": "投掷后脚部位置与投掷线的空间关系检测到越线",
+          "visualIndicator": "顶部/侧面摄像头: 脚部与投掷线检测"
+        }
+      ],
+      "correctionStrategy": {
+        "description": "实心球投掷最核心的问题是'只用上肢'。纠偏的关键不是讲理论, 而是让学生感受'力量从脚上传到手上'的链条感。用轻球(1kg排球替代)先建立正确模式, 再用实心球增加负荷。",
+        "drills": [
+          "下肢蹬伸练习: 不持球, 面对墙站立, 双手推墙, 仅练习双腿蹬伸+髋前送",
+          "轻球(1kg)模式练习: 用排球或1kg药球, 降低负荷, 专注技术",
+          "弹力带辅助: 弹力带固定在前方高处, 练习拉弹力带模拟投掷动作",
+          "慢动作分解: 教师口令'蹬→送→转→伸→拨', 学生按节奏分步完成"
+        ],
+        "verbalCue": "脚比手先动——让力量从脚底传到指尖",
+        "physicalGuidance": "教师站在学生身后, 双手扶其骨盆两侧, 在发力阶段顺势前推其髋部, 帮助体会髋前送的时机和幅度"
+      }
+    }
+  ]
+}
