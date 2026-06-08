@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sports-motion-data.org/schema/sport.schema.json",
+  "title": "Sport",
+  "description": "运动项目层 — 描述一个完整的运动技能",
+  "type": "object",
+  "required": ["sportId", "name", "category", "movementPattern", "applicableGrades", "skillUnits", "teachingProgression"],
+  "properties": {
+    "sportId": {
+      "type": "string",
+      "description": "唯一标识，如 '50m-sprint'",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "项目中文名称"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["track", "jump", "throw", "coordination", "strength"],
+      "description": "运动类别"
+    },
+    "movementPattern": {
+      "type": "string",
+      "enum": ["linear-locomotion", "vertical-jump", "overhead-throw", "cyclic-coordination", "pull-strength"],
+      "description": "基础动作模式"
+    },
+    "applicableGrades": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^grade-[1-9]$"
+      },
+      "description": "适用年级"
+    },
+    "equipment": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "所需器材"
+    },
+    "venue": {
+      "type": "string",
+      "description": "场地要求"
+    },
+    "skillUnits": {
+      "type": "array",
+      "items": { "$ref": "skill-unit.schema.json" },
+      "description": "按执行顺序排列的技能单元"
+    },
+    "teachingProgression": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["order", "name", "goal", "drills", "focusUnits"],
+        "properties": {
+          "order": { "type": "integer", "minimum": 1 },
+          "name": { "type": "string" },
+          "goal": { "type": "string" },
+          "drills": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "focusUnits": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "description": "教学梯度"
+    },
+    "assessmentRules": {
+      "type": "array",
+      "items": { "$ref": "assessment-rule.schema.json" },
+      "description": "评价规则"
+    }
+  }
+}
