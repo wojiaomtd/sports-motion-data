@@ -1,0 +1,356 @@
+{
+  "sportId": "pull-up",
+  "name": "引体向上",
+  "category": "strength",
+  "movementPattern": "pull-strength",
+  "applicableGrades": ["grade-7", "grade-8", "grade-9"],
+  "equipment": ["高单杠(杠高 ≥ 2.2m)", "镁粉(防滑)"],
+  "venue": "单杠区, 下方有保护垫",
+  "skillUnits": [
+    {
+      "unitId": "pullup-hang",
+      "name": "悬垂准备",
+      "order": 1,
+      "durationMs": 2000,
+      "description": "双手正握(掌心朝前), 握距略宽于肩, 身体自然下垂, 肩胛骨下沉(激活背阔肌), 核心微收紧, 双腿伸直并拢或交叉, 目视杠上方",
+      "keyJoints": {
+        "握距": {
+          "angleRange": [45, 60],
+          "angleDescription": "双手间距(cm), 略宽于肩(约45-55cm)",
+          "measurementMethod": "pose-estimation"
+        },
+        "肩胛位置": {
+          "angleRange": [2, 5],
+          "angleDescription": "肩胛骨下沉程度(cm), 下沉越充分背阔肌越参与",
+          "measurementMethod": "pose-estimation(肩峰位置变化)"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "前臂屈肌+背阔肌",
+          "direction": "向下",
+          "timing": "early",
+          "description": "握紧杠, 肩胛下沉, 激活背部肌肉"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "自然悬挂在杠下方",
+        "heightChange": "stable",
+        "horizontalShift": "稳定"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "悬挂准备完成",
+          "description": "双手正握, 身体静止, 无摆动, 肩胛下沉",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "pullup-shrug",
+          "name": "耸肩悬挂",
+          "visualCue": "肩膀耸到耳朵旁, 肩胛骨未下沉",
+          "rootCause": "不知道要下沉肩胛/背阔肌无力",
+          "severity": "critical"
+        },
+        {
+          "errorId": "pullup-body-swing",
+          "name": "身体晃动",
+          "visualCue": "悬挂时身体前后或左右摆动",
+          "rootCause": "核心未收紧/起跳抓杠时惯性",
+          "severity": "minor"
+        }
+      ]
+    },
+    {
+      "unitId": "pullup-pull",
+      "name": "引体上升",
+      "order": 2,
+      "durationMs": 1500,
+      "description": "背阔肌和肱二头肌协同发力, 肩胛骨内收下沉, 肘关节屈曲, 身体垂直上升, 下巴过杠, 过程中不蹬腿、不摆体、不借力",
+      "keyJoints": {
+        "肘角(最低点)": {
+          "angleRange": [160, 180],
+          "angleDescription": "底部时肘关节接近伸直但不锁死",
+          "measurementMethod": "pose-estimation"
+        },
+        "肘角(最高点)": {
+          "angleRange": [40, 60],
+          "angleDescription": "下巴过杠时肘关节弯曲角度",
+          "measurementMethod": "pose-estimation"
+        },
+        "下巴-杠距离(最高点)": {
+          "angleRange": [0, 5],
+          "angleDescription": "下巴超过杠面的距离(cm), 必须 > 0",
+          "measurementMethod": "pose-estimation: 下巴与杠面的垂直距离"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "背阔肌",
+          "direction": "向下后方",
+          "timing": "early",
+          "description": "背阔肌主导, 拉动身体向上"
+        },
+        {
+          "bodyPart": "肱二头肌+肱肌",
+          "direction": "向上",
+          "timing": "mid",
+          "description": "屈肘配合背部发力"
+        },
+        {
+          "bodyPart": "肩胛内收肌群",
+          "direction": "向内",
+          "timing": "early",
+          "description": "肩胛骨内收, 稳定肩关节"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "垂直上升",
+        "heightChange": "上升30-40cm(下巴过杠)",
+        "horizontalShift": "无明显水平位移"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "发力起点",
+          "description": "肩胛下沉, 背部开始发力, 肘关节开始屈曲",
+          "timing": "start"
+        },
+        {
+          "frameName": "半程",
+          "description": "眼睛与杠平齐, 肘关节约90°",
+          "timing": "mid"
+        },
+        {
+          "frameName": "下巴过杠",
+          "description": "下巴超过杠面上方, 引体完成",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "pullup-kip",
+          "name": "借力摆动/蹬腿",
+          "visualCue": "身体前后摆动, 下肢明显屈伸借力",
+          "rootCause": "力量不足/技术取巧",
+          "severity": "critical"
+        },
+        {
+          "errorId": "pullup-chin-not-over",
+          "name": "下巴不过杠",
+          "visualCue": "拉到最高点时下巴仍在杠下方",
+          "rootCause": "力量不足/动作范围不足",
+          "severity": "critical"
+        },
+        {
+          "errorId": "pullup-chin-over-stretch",
+          "name": "伸脖子够杠",
+          "visualCue": "下巴奋力上抬, 颈椎后伸, 用脖子代替手臂力量",
+          "rootCause": "力量不足, 试图用脖子凑高度",
+          "severity": "major"
+        },
+        {
+          "errorId": "pullup-arm-only",
+          "name": "纯手臂发力",
+          "visualCue": "背部无收缩, 仅靠肱二头肌弯举式拉上",
+          "rootCause": "背阔肌发力感不足/技术错误",
+          "severity": "major"
+        }
+      ]
+    },
+    {
+      "unitId": "pullup-lower",
+      "name": "下放还原",
+      "order": 3,
+      "durationMs": 1500,
+      "description": "有控制地缓慢下放, 肘关节逐渐伸直, 回到悬垂姿势, 过程中保持肩胛下沉, 身体不晃动, 不完全放松(为下一次引体蓄力)",
+      "keyJoints": {
+        "下放速度": {
+          "angleRange": [1, 3],
+          "angleDescription": "下放应受控, 速度不应快于自由落体, 推荐1-2秒完成",
+          "measurementMethod": "pose-estimation(下巴/肩部下降速度)"
+        },
+        "底部肘角": {
+          "angleRange": [160, 180],
+          "angleDescription": "下放到底时肘关节接近伸直但保持微屈(不锁死)",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "背阔肌+肱二头肌",
+          "direction": "离心收缩(控制下降)",
+          "timing": "early",
+          "description": "离心收缩控制下放速度, 不是自由落体"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "垂直下降",
+        "heightChange": "下降30-40cm",
+        "horizontalShift": "无明显水平位移"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "下放开始",
+          "description": "下巴离开杠面, 开始受控下放",
+          "timing": "start"
+        },
+        {
+          "frameName": "底部悬垂",
+          "description": "肘关节接近伸直, 身体稳定, 准备下一次引体",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "pullup-drop",
+          "name": "自由落体下放",
+          "visualCue": "到顶后直接松手式下落, 速度极快",
+          "rootCause": "力量不足/不懂离心训练价值",
+          "severity": "major"
+        },
+        {
+          "errorId": "pullup-lockout",
+          "name": "底部锁死肘关节",
+          "visualCue": "下放到底时肘关节完全锁直, 肩部放松",
+          "rootCause": "未保持肌肉张力",
+          "severity": "minor"
+        }
+      ]
+    },
+    {
+      "unitId": "pullup-fatigue",
+      "name": "力竭与终止",
+      "order": 4,
+      "durationMs": 5000,
+      "description": "当无法再完成标准引体时(无法使下巴过杠或出现明显借力), 应在杠上暂停而非强行继续。考试时, 最后一个有效引体后可在杠上停留不超过10秒",
+      "keyJoints": {},
+      "forceSequence": [],
+      "centerOfGravity": {
+        "trajectory": "悬挂稳定",
+        "heightChange": "stable",
+        "horizontalShift": "可能出现晃动"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "最后一个有效引体",
+          "description": "最后一次下巴过杠, 之后无法继续",
+          "timing": "start"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "pullup-force-rep",
+          "name": "强行借力凑数",
+          "visualCue": "明显摆动/蹬腿/伸脖子, 动作严重变形",
+          "rootCause": "想多做一个但力量已耗尽",
+          "severity": "critical"
+        }
+      ]
+    }
+  ],
+  "teachingProgression": [
+    {
+      "order": 1,
+      "name": "分解模仿",
+      "goal": "降低难度建立基础力量: 悬挂→肩胛激活→澳式引体",
+      "drills": [
+        "悬垂肩胛激活: 仅练习肩胛骨的下沉和上提(不拉引体), 建立背阔肌发力感",
+        "澳式引体(低杠划船): 杠降低至腰部高度, 身体倾斜脚跟着地, 做划船式引体",
+        "负重悬挂: 单纯悬挂30-60秒, 增强握力"
+      ],
+      "focusUnits": ["pullup-hang"]
+    },
+    {
+      "order": 2,
+      "name": "完整动作",
+      "goal": "弹力带辅助完整引体, 关注背阔肌发力",
+      "drills": [
+        "弹力带辅助引体: 弹力带系在杠上兜住脚/膝, 减少自重",
+        "离心引体(跳上缓慢下放): 跳上至下巴过杠, 然后尽可能慢地(5-8秒)下放"
+      ],
+      "focusUnits": ["pullup-hang", "pullup-pull", "pullup-lower"]
+    },
+    {
+      "order": 3,
+      "name": "纠偏优化",
+      "goal": "针对借力/下巴不过杠/纯手臂发力进行纠偏",
+      "drills": [
+        "死虫式引体(下肢固定): 双腿交叉抬至水平, 消除腿部借力可能性",
+        "弹力带递减: 逐步使用更细的弹力带(降低辅助力度), 直至自重"
+      ],
+      "focusUnits": ["pullup-pull", "pullup-lower"]
+    },
+    {
+      "order": 4,
+      "name": "强化自动化",
+      "goal": "自重标准引体+耐力积累, 形成动作自动化",
+      "drills": [
+        "GTG(Grease the Groove): 每天多次做50%最大次数的引体, 不做到力竭",
+        "金字塔训练: 1个→休息→2个→休息→...→最大→递减→1个"
+      ],
+      "focusUnits": ["pullup-pull", "pullup-lower", "pullup-fatigue"]
+    }
+  ],
+  "assessmentRules": [
+    {
+      "ruleId": "pull-up-score",
+      "skillUnitId": "pullup-pull",
+      "fullScoreStandard": {
+        "description": "正握, 身体不摆动, 下巴过杠, 下放时肘关节充分伸展(接近伸直), 动作连贯, 计数达到年级标准",
+        "quantifiedThresholds": {
+          "下巴过杠高度": {
+            "unit": "cm",
+            "passRange": [1, 10],
+            "measurementMethod": "pose-estimation: 下巴最高点 - 杠面高度"
+          },
+          "身体摆动幅度": {
+            "unit": "cm",
+            "passRange": [0, 5],
+            "measurementMethod": "pose-estimation: 髋关节的水平位移范围"
+          },
+          "下放伸展度": {
+            "unit": "度",
+            "passRange": [150, 180],
+            "measurementMethod": "pose-estimation: 下放最低点时肘关节角度"
+          }
+        }
+      },
+      "deductionPoints": [
+        {
+          "pointId": "pullup-swing-deduct",
+          "description": "身体摆动/蹬腿借力",
+          "deductionValue": 5,
+          "triggerCondition": "髋关节水平位移 > 10cm 或膝关节角度变化 > 30°",
+          "visualIndicator": "侧面摄像头: 髋关节水平位移追踪 + 膝关节角度"
+        },
+        {
+          "pointId": "pullup-chin-deduct",
+          "description": "下巴未过杠",
+          "deductionValue": 5,
+          "triggerCondition": "最高点下巴高度 ≤ 杠面高度",
+          "visualIndicator": "侧面摄像头: 下巴与杠的垂直距离"
+        },
+        {
+          "pointId": "pullup-arm-range-deduct",
+          "description": "下放不充分(肘关节未充分伸展)",
+          "deductionValue": 3,
+          "triggerCondition": "下放最低点时肘角 < 120°",
+          "visualIndicator": "侧面摄像头: 肘关节角度"
+        }
+      ],
+      "correctionStrategy": {
+        "description": "引体向上是中考体育最难的男生项目(零分率最高)。纠偏逻辑分三层: 力量不够的→辅助练习(弹力带/离心训练); 技术不对的→纠正发力模式(背主导vs手臂主导); 心理恐惧的→降低难度建立信心。",
+        "drills": [
+          "弹力带辅助引体: 弹力带系在杠上兜住脚/膝, 减少自重",
+          "离心引体(跳上缓慢下放): 跳上至下巴过杠, 然后尽可能慢地(5-8秒)下放",
+          "澳式引体(低杠划船): 杠降低至腰部高度, 身体倾斜, 脚跟着地, 做划船式引体(降低难度)",
+          "悬垂肩胛激活: 仅练习肩胛骨的下沉和上提(不拉引体), 建立背阔肌发力感",
+          "负重悬挂: 单纯悬挂30-60秒, 增强握力"
+        ],
+        "verbalCue": "把杠拉到胸口, 不是拉到下巴——想象胸部触杠",
+        "physicalGuidance": "教师站在学生身后, 双手扶其背阔肌位置(腋下后方), 在上升时用手指提示'这里用力', 帮助学生建立背阔肌发力感"
+      }
+    }
+  ]
+}
