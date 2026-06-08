@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sports-motion-data.org/schema/skill-unit.schema.json",
+  "title": "SkillUnit",
+  "description": "技能单元层 — 描述运动技能的一个执行阶段",
+  "type": "object",
+  "required": ["unitId", "name", "order", "durationMs", "description", "keyJoints", "forceSequence", "centerOfGravity", "keyVisualFrames", "commonErrors"],
+  "properties": {
+    "unitId": {
+      "type": "string",
+      "description": "唯一标识, 如 '50m-sprint-start'"
+    },
+    "name": {
+      "type": "string",
+      "description": "阶段中文名称"
+    },
+    "order": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "执行顺序 (1-based)"
+    },
+    "durationMs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "典型持续时间 (毫秒)"
+    },
+    "description": {
+      "type": "string",
+      "description": "理想动作描述"
+    },
+    "keyJoints": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["angleRange", "angleDescription", "measurementMethod"],
+        "properties": {
+          "angleRange": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": { "type": "number" },
+            "description": "[最小角度, 最大角度] 单位: 度"
+          },
+          "angleDescription": { "type": "string" },
+          "measurementMethod": {
+            "type": "string",
+            "enum": ["goniometer", "motion-capture", "pose-estimation"]
+          }
+        }
+      }
+    },
+    "forceSequence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["bodyPart", "direction", "timing", "description"],
+        "properties": {
+          "bodyPart": { "type": "string" },
+          "direction": { "type": "string" },
+          "timing": {
+            "type": "string",
+            "enum": ["early", "mid", "late"]
+          },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "centerOfGravity": {
+      "type": "object",
+      "required": ["trajectory", "heightChange", "horizontalShift"],
+      "properties": {
+        "trajectory": { "type": "string" },
+        "heightChange": {
+          "type": "string",
+          "enum": ["rise", "fall", "stable"]
+        },
+        "horizontalShift": { "type": "string" }
+      }
+    },
+    "keyVisualFrames": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["frameName", "description", "timing"],
+        "properties": {
+          "frameName": { "type": "string" },
+          "description": { "type": "string" },
+          "timing": {
+            "type": "string",
+            "enum": ["start", "mid", "end"]
+          }
+        }
+      }
+    },
+    "commonErrors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["errorId", "name", "visualCue", "rootCause", "severity"],
+        "properties": {
+          "errorId": { "type": "string" },
+          "name": { "type": "string" },
+          "visualCue": { "type": "string" },
+          "rootCause": { "type": "string" },
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "major", "minor"]
+          }
+        }
+      }
+    }
+  }
+}
