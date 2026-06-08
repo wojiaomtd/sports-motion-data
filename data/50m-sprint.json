@@ -1,0 +1,432 @@
+{
+  "sportId": "50m-sprint",
+  "name": "50米跑",
+  "category": "track",
+  "movementPattern": "linear-locomotion",
+  "applicableGrades": ["grade-7", "grade-8", "grade-9"],
+  "equipment": ["起跑器(可选)", "秒表/光电计时", "发令枪/旗"],
+  "venue": "标准跑道, 直线50米, 至少6条分道",
+  "skillUnits": [
+    {
+      "unitId": "50m-sprint-start",
+      "name": "起跑",
+      "order": 1,
+      "durationMs": 300,
+      "description": "听到发令后, 双脚同时蹬离起跑器/地面, 身体保持前倾, 双臂快速交替摆动, 后腿积极前摆, 前腿充分蹬伸",
+      "keyJoints": {
+        "前腿膝角": {
+          "angleRange": [90, 110],
+          "angleDescription": "前腿膝关节角度, 太小则蹬伸行程过长, 太大则发力不足",
+          "measurementMethod": "pose-estimation"
+        },
+        "后腿膝角": {
+          "angleRange": [120, 135],
+          "angleDescription": "后腿膝关节角度",
+          "measurementMethod": "pose-estimation"
+        },
+        "躯干倾角": {
+          "angleRange": [40, 55],
+          "angleDescription": "躯干与地面夹角, 起跑阶段应明显前倾以便加速",
+          "measurementMethod": "pose-estimation"
+        },
+        "髋角": {
+          "angleRange": [60, 80],
+          "angleDescription": "髋关节角度, 反映身体折叠程度",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "前脚掌",
+          "direction": "向后下方",
+          "timing": "early",
+          "description": "前脚掌爆发蹬地, 将身体向前上方推进"
+        },
+        {
+          "bodyPart": "双臂",
+          "direction": "交替前后",
+          "timing": "early",
+          "description": "前臂屈肘快摆, 后臂伸肘后摆, 带动身体节奏"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "由低位向前上方移动",
+        "heightChange": "rise",
+        "horizontalShift": "明显前移, 前2-3步重心投影点在身体前方"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "预备姿势",
+          "description": "蹲踞/站立式起跑准备, 重心在前脚",
+          "timing": "start"
+        },
+        {
+          "frameName": "蹬离瞬间",
+          "description": "后脚离地, 身体前倾角度最大",
+          "timing": "mid"
+        },
+        {
+          "frameName": "第一步着地",
+          "description": "前摆腿着地, 身体仍保持前倾",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "start-upright-too-early",
+          "name": "过早直立",
+          "visualCue": "起跑后第2-3步躯干即接近垂直",
+          "rootCause": "核心力量不足/恐惧前倾摔倒",
+          "severity": "critical"
+        },
+        {
+          "errorId": "start-arm-stiff",
+          "name": "摆臂僵硬",
+          "visualCue": "肘关节角度固定不变, 摆动幅度小",
+          "rootCause": "上肢协调性不足",
+          "severity": "major"
+        },
+        {
+          "errorId": "start-stumble",
+          "name": "第一步过大导致踉跄",
+          "visualCue": "第一步步幅超过正常步幅的1.5倍, 身体后仰",
+          "rootCause": "试图一步加速到位",
+          "severity": "minor"
+        }
+      ]
+    },
+    {
+      "unitId": "50m-sprint-acceleration",
+      "name": "加速跑",
+      "order": 2,
+      "durationMs": 1500,
+      "description": "步幅逐渐增大, 步频保持高节奏, 身体从前倾逐步过渡至略微前倾, 双臂以肩为轴快速前后摆动, 前脚掌着地",
+      "keyJoints": {
+        "躯干倾角": {
+          "angleRange": [65, 80],
+          "angleDescription": "相比起跑阶段逐渐立起, 但仍保持前倾以维持加速",
+          "measurementMethod": "pose-estimation"
+        },
+        "肘角": {
+          "angleRange": [80, 100],
+          "angleDescription": "摆臂时肘关节角度, 约90°为最佳",
+          "measurementMethod": "pose-estimation"
+        },
+        "膝角(着地瞬间)": {
+          "angleRange": [155, 170],
+          "angleDescription": "着地瞬间支撑腿膝关节角度, 接近伸直但保持微屈",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "髋伸肌群",
+          "direction": "向后",
+          "timing": "late",
+          "description": "充分顶髋, 将力量从核心传递到下肢"
+        },
+        {
+          "bodyPart": "跖屈肌群",
+          "direction": "向下后方",
+          "timing": "late",
+          "description": "脚踝刚性蹬伸, 减少触地时间"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "平稳前移, 上下波动 < 3cm",
+        "heightChange": "stable",
+        "horizontalShift": "持续匀速前移"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "着地瞬间",
+          "description": "前脚掌外侧着地, 落在身体重心投影点下方或略前方",
+          "timing": "start"
+        },
+        {
+          "frameName": "支撑中期",
+          "description": "身体重心经过支撑腿正上方",
+          "timing": "mid"
+        },
+        {
+          "frameName": "蹬离瞬间",
+          "description": "支撑腿充分伸展, 脚踝跖屈",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "accel-overstride",
+          "name": "步幅过大蹬地无力",
+          "visualCue": "着地点在身体重心投影点前方过远, 产生制动",
+          "rootCause": "力量不足却追求大步幅",
+          "severity": "critical"
+        },
+        {
+          "errorId": "accel-heel-strike",
+          "name": "脚跟先着地",
+          "visualCue": "着地瞬间脚尖上翘, 脚跟触地",
+          "rootCause": "踝关节力量不足/技术错误",
+          "severity": "major"
+        }
+      ]
+    },
+    {
+      "unitId": "50m-sprint-max-velocity",
+      "name": "途中跑",
+      "order": 3,
+      "durationMs": 3000,
+      "description": "身体接近直立(微前倾), 步幅步频趋于稳定, 双臂大幅度前后摆动, 前脚掌快速扒地, 髋关节充分伸展, 核心收紧保持身体稳定",
+      "keyJoints": {
+        "躯干倾角": {
+          "angleRange": [78, 88],
+          "angleDescription": "接近直立但保持微前倾",
+          "measurementMethod": "pose-estimation"
+        },
+        "髋伸展角(蹬离)": {
+          "angleRange": [175, 195],
+          "angleDescription": "蹬离瞬间髋关节伸展角度, 充分打开说明发力完整",
+          "measurementMethod": "pose-estimation"
+        },
+        "摆臂肘角": {
+          "angleRange": [85, 100],
+          "angleDescription": "前摆屈肘近90°, 后摆肘角略大",
+          "measurementMethod": "pose-estimation"
+        },
+        "膝折叠角(摆动腿)": {
+          "angleRange": [55, 75],
+          "angleDescription": "摆动腿折叠程度, 折叠越紧, 摆动越快",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "髋屈肌",
+          "direction": "向前上方",
+          "timing": "early",
+          "description": "快速提膝前摆"
+        },
+        {
+          "bodyPart": "跖屈肌群+腘绳肌",
+          "direction": "向后下扒地",
+          "timing": "mid",
+          "description": "前脚掌主动向后下方扒地, 减少制动"
+        },
+        {
+          "bodyPart": "臀大肌+髋伸肌",
+          "direction": "向后",
+          "timing": "late",
+          "description": "充分伸髋驱动"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "接近水平的波浪线, 波幅 < 2cm",
+        "heightChange": "stable",
+        "horizontalShift": "最高速度阶段, 水平位移速度最大"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "前摆最高点",
+          "description": "摆动腿膝盖前提到最高点, 大腿接近水平",
+          "timing": "start"
+        },
+        {
+          "frameName": "支撑垂直",
+          "description": "身体重心经过支撑腿正上方, 支撑腿膝微屈",
+          "timing": "mid"
+        },
+        {
+          "frameName": "蹬离",
+          "description": "支撑腿髋-膝-踝三关节充分伸展",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "maxv-sitting",
+          "name": "坐着跑",
+          "visualCue": "髋关节始终在支撑腿后方, 臀部后坐, 躯干后仰",
+          "rootCause": "髋屈肌/核心力量不足, 无法积极送髋",
+          "severity": "critical"
+        },
+        {
+          "errorId": "maxv-over-swing",
+          "name": "摆臂过大横摆",
+          "visualCue": "双臂在体前交叉, 左右横摆幅度 > 前后摆动幅度",
+          "rootCause": "肩关节灵活性不足/技术错误",
+          "severity": "major"
+        },
+        {
+          "errorId": "maxv-collapse",
+          "name": "核心松散身体晃动",
+          "visualCue": "躯干左右晃动 > 5cm, 骨盆倾斜",
+          "rootCause": "核心稳定性不足",
+          "severity": "major"
+        }
+      ]
+    },
+    {
+      "unitId": "50m-sprint-finish",
+      "name": "冲刺压线",
+      "order": 4,
+      "durationMs": 500,
+      "description": "保持途中跑技术, 不过早减速, 距终点线2-3米时做压线动作(躯干前倾挺胸, 双臂后摆), 过线后逐渐减速",
+      "keyJoints": {
+        "躯干倾角(压线瞬间)": {
+          "angleRange": [40, 60],
+          "angleDescription": "压线瞬间躯干快速前倾, 角度越小胸前挺越有效",
+          "measurementMethod": "pose-estimation"
+        }
+      },
+      "forceSequence": [
+        {
+          "bodyPart": "躯干",
+          "direction": "前下方",
+          "timing": "late",
+          "description": "主动前倾压线, 不是被动摔倒"
+        }
+      ],
+      "centerOfGravity": {
+        "trajectory": "先维持高水平位移, 压线时突然前移加速下降",
+        "heightChange": "稳定后突然下降(压线)",
+        "horizontalShift": "压线时重心超出支撑面前方"
+      },
+      "keyVisualFrames": [
+        {
+          "frameName": "距终点3米",
+          "description": "仍保持途中跑姿势, 未提前减速",
+          "timing": "start"
+        },
+        {
+          "frameName": "压线前倾",
+          "description": "躯干快速前倾, 双臂后摆, 胸/肩前挺",
+          "timing": "mid"
+        },
+        {
+          "frameName": "过线",
+          "description": "躯干过线, 后续减速",
+          "timing": "end"
+        }
+      ],
+      "commonErrors": [
+        {
+          "errorId": "finish-early-decelerate",
+          "name": "终点前减速",
+          "visualCue": "距终点3-5米步幅明显减小, 步频降低",
+          "rootCause": "心理因素/习惯性减速",
+          "severity": "critical"
+        },
+        {
+          "errorId": "finish-jump",
+          "name": "跳线",
+          "visualCue": "双脚同时离地跳起过线",
+          "rootCause": "错误理解压线动作",
+          "severity": "major"
+        }
+      ]
+    }
+  ],
+  "teachingProgression": [
+    {
+      "order": 1,
+      "name": "分解模仿",
+      "goal": "分部位练习: 原地摆臂→小步跑→高抬腿",
+      "drills": [
+        "原地摆臂练习: 双脚前后站立, 以肩为轴前后摆臂, 30秒×3组",
+        "小步跑: 短步幅快频率, 前脚掌着地, 15米×5组",
+        "高抬腿跑: 大腿抬至水平, 配合摆臂, 15米×5组"
+      ],
+      "focusUnits": ["50m-sprint-start", "50m-sprint-acceleration"]
+    },
+    {
+      "order": 2,
+      "name": "完整动作",
+      "goal": "慢速完整跑, 关注姿势和发力顺序",
+      "drills": [
+        "60%速度完整50米跑, 教师逐人反馈姿势问题",
+        "录像回放+自我分析: 学生观看自己的跑姿视频"
+      ],
+      "focusUnits": ["50m-sprint-start", "50m-sprint-acceleration", "50m-sprint-max-velocity", "50m-sprint-finish"]
+    },
+    {
+      "order": 3,
+      "name": "纠偏优化",
+      "goal": "针对个人错误模式做针对性修正",
+      "drills": [
+        "推墙跑(纠正过早直立): 双手推墙身体前倾30°, 做原地高抬腿",
+        "弹力带抗阻起跑(强化前倾发力): 腰部系弹力带由同伴向后拉, 练习克服阻力前倾起跑"
+      ],
+      "focusUnits": ["50m-sprint-start", "50m-sprint-max-velocity"]
+    },
+    {
+      "order": 4,
+      "name": "强化自动化",
+      "goal": "间歇冲刺+起跑练习, 形成动作自动化",
+      "drills": [
+        "30米×6组冲刺(组间休息90秒)",
+        "听信号起跑×10次"
+      ],
+      "focusUnits": ["50m-sprint-start", "50m-sprint-acceleration", "50m-sprint-max-velocity", "50m-sprint-finish"]
+    }
+  ],
+  "assessmentRules": [
+    {
+      "ruleId": "50m-start-posture-score",
+      "skillUnitId": "50m-sprint-start",
+      "fullScoreStandard": {
+        "description": "听到发令后反应迅速, 双脚同时蹬离, 身体前倾45-55°, 前腿膝角90-110°, 后腿充分蹬伸, 双臂交替快摆, 第一步落点合理",
+        "quantifiedThresholds": {
+          "前腿膝角": {
+            "unit": "度",
+            "passRange": [90, 110],
+            "measurementMethod": "pose-estimation: 膝关节外侧角度"
+          },
+          "躯干倾角": {
+            "unit": "度",
+            "passRange": [40, 55],
+            "measurementMethod": "pose-estimation: 肩-髋连线与地面夹角"
+          },
+          "第一步步幅": {
+            "unit": "cm",
+            "passRange": [80, 120],
+            "measurementMethod": "视频分析: 起跑线到第一步着地点距离"
+          }
+        }
+      },
+      "deductionPoints": [
+        {
+          "pointId": "start-knee-angle-out",
+          "description": "前腿膝关节角度超出理想区间(过小<90°或过大>110°)",
+          "deductionValue": 2,
+          "triggerCondition": "前腿膝角 < 85° 或前腿膝角 > 115°",
+          "visualIndicator": "侧面摄像头可检测"
+        },
+        {
+          "pointId": "start-upright",
+          "description": "起跑后躯干过早直立(第3步前躯干倾角 > 70°)",
+          "deductionValue": 3,
+          "triggerCondition": "起跑后第2-3步即躯干倾角 > 70°",
+          "visualIndicator": "侧面摄像头: 肩-髋连线角度变化"
+        },
+        {
+          "pointId": "start-first-step-too-long",
+          "description": "第一步步幅过大(>140cm)导致制动",
+          "deductionValue": 1,
+          "triggerCondition": "第一步着地点距起跑线 > 140cm",
+          "visualIndicator": "俯视/侧面摄像头测量"
+        }
+      ],
+      "correctionStrategy": {
+        "description": "起跑过早直立是最常见问题, 核心在于建立'身体前倾加速'的体感。用斜坡跑、推墙跑等降低心理恐惧, 再用弹力带抗阻起跑强化前倾发力模式",
+        "drills": [
+          "斜坡跑: 在约5°的下坡上做起跑练习, 利用重力帮助维持前倾",
+          "推墙跑: 双手推墙, 身体前倾30°, 做原地高抬腿, 体会前倾跑姿",
+          "弹力带抗阻起跑: 腰部系弹力带由同伴向后拉, 练习克服阻力前倾起跑",
+          "俯卧撑接起跑: 从俯卧撑姿势直接过渡到起跑, 强化前倾体感"
+        ],
+        "verbalCue": "身体比脚先出发——让你的胸口先过线",
+        "physicalGuidance": "教练站在起跑者身后, 一手扶其肩胛之间, 在发令时轻推其向前, 帮助学生体会'被推着跑'的前倾感"
+      }
+    }
+  ]
+}
